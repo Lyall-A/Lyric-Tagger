@@ -92,12 +92,12 @@ async function addLyrics(file, directory) {
 
     let lrcLyrics = null;
     await findLyrics(metadata, true).then(exactLyrics => {
-        if (!exactLyrics.syncedLyrics && directory.requireSyncedLyrics) return;
+        if (!exactLyrics.syncedLyrics && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
         lrcLyrics = createLrc(exactLyrics.syncedLyrics || exactLyrics.unsyncedLyrics);
-    }).catch(async () => {
-        if (directory.exactMatchOnly) return;
+    }).catch(async err => {
+        if (directory.exactMatchOnly) throw new Error(err);
         await findLyrics(metadata, false).then(foundLyrics => {
-            if (!foundLyrics.syncedLyrics && directory.requireSyncedLyrics) return;
+            if (!foundLyrics.syncedLyrics && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
             lrcLyrics = createLrc(foundLyrics.syncedLyrics || foundLyrics.unsyncedLyrics);
         }).catch(err => {
             throw new Error(err);
