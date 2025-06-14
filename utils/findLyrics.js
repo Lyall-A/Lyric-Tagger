@@ -19,7 +19,7 @@ function findLyrics(metadata, exactMatch = true) {
                 "User-Agent": `Lyric-Tagger (https://github.com/Lyall-A/Lyric-Tagger)`
             }
         }).then(async res => {
-            if (res.status !== 200) return reject(`Got status ${res.status}`);
+            if (res.status !== 200) return reject(res.status === 404 ? "No lyrics for track found" : `Got status ${res.status}`);
             try {
                 const resJson = await res.json();
                 const lyrics = exactMatch ? resJson : resJson?.[0];
