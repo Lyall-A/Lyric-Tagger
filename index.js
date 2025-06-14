@@ -47,7 +47,7 @@ function updateDirectories() {
                 if (await hasLyrics(fullPath).catch(err => true)) return;
                 console.log(`Attempting to add lyrics to '${path.basename(fullPath)}'`);
                 await addLyrics(fullPath, directory).catch(err => {
-                    console.log(`Failed to add lyrics to '${path.relative(directory.path, fullPath)}': ${err}`);
+                    console.log(`Failed to add lyrics to '${path.relative(directory.path, fullPath)}': ${err.message}`);
                 });
             }
         });
@@ -78,7 +78,7 @@ async function scanDirectory(directory) {
                 if (await hasLyrics(fullPath).catch(err => true)) continue;
                 console.log(`Attempting to add lyrics to '${path.basename(fullPath)}'`);
                 await addLyrics(fullPath, directory).catch(err => {
-                    console.log(`Failed to add lyrics to '${path.relative(directory.path, fullPath)}': ${err}`);
+                    console.log(`Failed to add lyrics to '${path.relative(directory.path, fullPath)}': ${err.message}`);
                 });
             }
         }
