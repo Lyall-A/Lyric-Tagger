@@ -1,0 +1,9 @@
+{
+    "ffmpegPath": "ffmpeg",
+    "ffprobePath": "ffprobe",
+    "directoriesPath": "directories.json",
+    "titleTags": ["title"],
+    "albumTags": ["album"],
+    "artistTags": ["artist"],
+    "lyricsTags": ["lyrics:", "lyrics"]
+}

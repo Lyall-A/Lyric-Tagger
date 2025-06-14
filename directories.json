@@ -1,0 +1,13 @@
+[
+    {
+        "path": "/home/lyall/Music",
+        "formats": [".mp3", ".flac"],
+        "scanInterval": 1800000,
+        "scanOnStart": true,
+        "watch": false,
+        "maxDepth": null,
+        "types": ["embedded"],
+        "exactMatchOnly": true,
+        "requireSyncedLyrics": true
+    }
+]
