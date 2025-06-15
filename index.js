@@ -92,13 +92,13 @@ async function addLyrics(file, directory) {
 
     let lrcLyrics = null;
     await findLyrics(metadata, true).then(exactLyrics => {
-        if (!exactLyrics.syncedLyrics && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
-        lrcLyrics = createLrc(exactLyrics.syncedLyrics || exactLyrics.unsyncedLyrics);
+        if (!exactLyrics.synced && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
+        lrcLyrics = createLrc(exactLyrics.synced || exactLyrics.plain);
     }).catch(async err => {
         if (directory.exactMatchOnly) throw new Error(err);
         await findLyrics(metadata, false).then(foundLyrics => {
-            if (!foundLyrics.syncedLyrics && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
-            lrcLyrics = createLrc(foundLyrics.syncedLyrics || foundLyrics.unsyncedLyrics);
+            if (!foundLyrics.synced && directory.requireSyncedLyrics) throw new Error("Synced lyrics not available");
+            lrcLyrics = createLrc(foundLyrics.synced || foundLyrics.plain);
         }).catch(err => {
             throw new Error(err);
         });
@@ -107,7 +107,7 @@ async function addLyrics(file, directory) {
     if (!directory.types) throw new Error("No types set to add lyrics");
     if (directory.types.includes("embedded")) {
         await addMetadata(file, { [config.lyricsTags[0]]: lrcLyrics }); // in config.json, 'lyrics:' is used because FFmpeg will change 'lyrics' to what it sees fit for that specific format
-        // embedLyrics(file, lyrics.syncedLyrics);
+        // embedLyrics(file, lyrics.synced);
     }
     if (directory.types.includes("lrc")) {
         fs.writeFileSync(`${file.slice(0, -path.extname(file).length)}.lrc`, lrcLyrics);

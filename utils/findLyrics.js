@@ -24,11 +24,11 @@ function findLyrics(metadata, exactMatch = true) {
                 const resJson = await res.json();
                 const lyrics = exactMatch ? resJson : resJson?.[0];
 
-                if (!lyrics) return reject("No lyrics for track found");
+                if (!lyrics.plainLyrics && !lyrics.syncedLyrics) return reject("No lyrics for track found");
 
                 resolve({
-                    unsyncedLyrics: lyrics.plainLyrics,
-                    syncedLyrics: lyrics.syncedLyrics
+                    plain: lyrics.plainLyrics,
+                    synced: lyrics.syncedLyrics
                 });
             } catch (err) {
                 reject(`Failed to parse API response: ${err}`);
