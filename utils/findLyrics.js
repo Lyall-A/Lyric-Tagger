@@ -24,7 +24,7 @@ function findLyrics(metadata, exactMatch = true) {
                 const resJson = await res.json();
                 const lyrics = exactMatch ? resJson : resJson?.[0];
 
-                if (!lyrics.plainLyrics && !lyrics.syncedLyrics) return reject("No lyrics for track found");
+                if (!lyrics?.plainLyrics && !lyrics?.syncedLyrics) return reject("No lyrics for track found");
 
                 resolve({
                     plain: lyrics.plainLyrics,
