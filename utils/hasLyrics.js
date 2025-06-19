@@ -11,8 +11,9 @@ function hasLyrics(file) {
         if (fs.existsSync(`${path.basename(file, path.extname(file))}.lrc`)) return resolve(true);
 
         // Has embedded lyrics?
+        // TODO: use kid3
         await getMetadata(file).then(metadata => {
-            const lyricsTag = Object.entries(metadata.tags).find(([key, value]) => config.lyricsTags.includes(key.toLowerCase()))?.[1];
+            const lyricsTag = Object.entries(metadata.tags).find(([key, value]) => config.lyricsTags.map(i => i.toLowerCase()).includes(key.toLowerCase()))?.[1];
             if (lyricsTag) return resolve(true);
         });
 

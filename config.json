@@ -1,9 +1,11 @@
 {
+    "method": "kid3",
+    "kid3CliPath": "kid3-cli",
     "ffmpegPath": "ffmpeg",
     "ffprobePath": "ffprobe",
     "directoriesPath": "directories.json",
     "titleTags": ["title"],
     "albumTags": ["album"],
     "artistTags": ["artist"],
-    "lyricsTags": ["lyrics:", "lyrics"]
+    "lyricsTags": ["lyrics", "lyrics-eng"]
 }

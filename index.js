@@ -2,9 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 const createLrc = require("./utils/createLrc");
-// const embedLyrics = require("./utils/embedLyrics");
+const embedLyrics = require("./utils/embedLyrics");
 const getMetadata = require("./utils/getMetadata");
-const addMetadata = require("./utils/addMetadata");
+// const addMetadata = require("./utils/addMetadata");
 const hasLyrics = require("./utils/hasLyrics");
 const findLyrics = require("./utils/findLyrics");
 
@@ -106,8 +106,8 @@ async function addLyrics(file, directory) {
 
     if (!directory.types) throw new Error("No types set to add lyrics");
     if (directory.types.includes("embedded")) {
-        await addMetadata(file, { [config.lyricsTags[0]]: lrcLyrics }); // in config.json, 'lyrics:' is used because FFmpeg will change 'lyrics' to what it sees fit for that specific format
-        // embedLyrics(file, lyrics.synced);
+        // await addMetadata(file, { [config.lyricsTags[0]]: lrcLyrics }); // in config.json, 'lyrics:' is used because FFmpeg will change 'lyrics' to what it sees fit for that specific format
+        embedLyrics(file, lrcLyrics);
     }
     if (directory.types.includes("lrc")) {
         fs.writeFileSync(`${file.slice(0, -path.extname(file).length)}.lrc`, lrcLyrics);
