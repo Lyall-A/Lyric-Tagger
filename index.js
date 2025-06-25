@@ -55,7 +55,7 @@ function updateDirectories() {
         // Add scan interval
         if (directory.scanOnStart) scanDirectory(directory);
         if (directory.scanInterval) {
-            directory.intervalCallback = () => scanDirectory(directory).then(() => setTimeout(intervalCallback, directory.scanInterval));
+            directory.intervalCallback = () => scanDirectory(directory).then(() => directory.scanTimeout = setTimeout(directory.intervalCallback, directory.scanInterval));
             directory.scanTimeout = setTimeout(directory.intervalCallback, directory.scanInterval);
         }
     }
