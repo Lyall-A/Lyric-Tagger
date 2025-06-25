@@ -6,9 +6,11 @@ const config = require("../config.json");
 
 function embedLyrics(file, lyrics) {
     return new Promise((resolve, reject) => {
+        const sanatizedLyrics = lyrics.replace(/"/g, i => `\\${i}`);
+
         if (config.method === "kid3") {
             const kid3CliProcess = child_process.spawn(config.kid3CliPath, [
-                "-c", `set ${config.lyricsTags[0]} "${lyrics}"`,
+                "-c", `set "${config.lyricsTags[0]}" "${sanatizedLyrics}"`,
                 file
             ]);
 
@@ -30,7 +32,7 @@ function embedLyrics(file, lyrics) {
 
             const ffmpegProcess = child_process.spawn(config.ffmpegPath, [
                 "-i", file,
-                "-metadata", `${config.lyricsTags[0]}:=${lyrics}`, // A semi-colon at the end stop's FFmpeg from replacing "lyrics" to the format's standard
+                "-metadata", `${config.lyricsTags[0]}:=${sanatizedLyrics}`, // A semi-colon at the end stop's FFmpeg from replacing "lyrics" to the format's standard
                 "-codec", "copy",
                 "-y",
                 tempOutput
